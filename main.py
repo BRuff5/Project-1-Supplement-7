@@ -63,8 +63,7 @@ def live_plot_distribution():
     ax.set_xlabel('Time (s)')
     ax.set_ylabel('Value')
     lines, = ax.plot([], [], 'bo-') 
-
-    # Prepare to store recent points
+    
     recent_points = []
     
     """
@@ -75,3 +74,38 @@ def live_plot_distribution():
     Returns:
         graph
     """
+    
+    def init():
+        """creates plot.
+        Args:
+            None
+        Returns:
+            lines: The initial empty line for the animation.
+        """
+        return lines,
+
+    def update(frame):
+        """Update the plot.
+        Args:
+            frame (int): The current frame number.
+        Returns:
+            lines (Line2D): The updated line for the animation.
+        """
+        
+        new_point = np.random.normal(loc=0, scale=1)
+        recent_points.append(new_point)
+        if len(recent_points) > 10:
+            recent_points.pop(0)
+
+        
+        lines.set_data(range(len(recent_points)), recent_points)
+        return lines,
+
+    ani = FuncAnimation(fig, update, frames=np.arange(0, 200), init_func=init, blit=True, interval=1000)
+    plt.show()
+
+
+if __name__ == "__main__":
+    plot_normal_distribution()  
+    plot_line(y_intercept=0, slope=1, lower_x=-10, upper_x=10)  
+    live_plot_distribution()  

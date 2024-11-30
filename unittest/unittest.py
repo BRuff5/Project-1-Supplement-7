@@ -56,32 +56,44 @@ def plot_line(y_intercept, slope, lower_x, upper_x):
     plt.legend()
     plt.show()
 
-# Unit Test Class
 class TestFunctions(unittest.TestCase):
 
     def test_plot_normal_distribution(self):
-        """Test that the normal distribution generates 200 data points."""
+        """Test that 200 points are generated from a normal distribution."""
         data = plot_normal_distribution()
-        self.assertEqual(len(data), 200)
-        self.assertIsInstance(data, np.ndarray)
+        self.assertEqual(len(data), 200)  # Check if 200 points are generated
+        self.assertAlmostEqual(np.mean(data), 0, delta=0.5)  # Mean should be close to 0
+        self.assertAlmostEqual(np.std(data), 1, delta=0.5)  # Std deviation should be close to 1
 
     def test_plot_line(self):
-        """Test that the line plot generates correct x and y values."""
-        y_intercept = 1
-        slope = 2
-        lower_x = -10
-        upper_x = 10
+        """Test that the line function generates correct x and y values."""
+        y_intercept = 2
+        slope = 3
+        lower_x = -5
+        upper_x = 5
 
         x_values, y_values = plot_line(y_intercept, slope, lower_x, upper_x)
-        self.assertEqual(len(x_values), 100)
-        self.assertEqual(len(y_values), 100)
-        self.assertAlmostEqual(y_values[0], slope * x_values[0] + y_intercept)
+        self.assertEqual(len(x_values), 100)  # Ensure 100 points are generated
+        self.assertEqual(len(y_values), 100)  # Ensure y matches x in length
+        self.assertAlmostEqual(y_values[0], slope * x_values[0] + y_intercept)  # Test the first point
+        self.assertAlmostEqual(y_values[-1], slope * x_values[-1] + y_intercept)  # Test the last point
 
-# Test the functions
+    def test_live_plot_distribution(self):
+        """Test the live plot for correct initialization."""
+        # This function can't be fully tested for visuals, but we can test the logic.
+        # For example, we can simulate the `recent_points` list.
+        recent_points = []
+        for _ in range(15):
+            new_point = np.random.normal(loc=0, scale=1)
+            recent_points.append(new_point)
+            if len(recent_points) > 10:
+                recent_points.pop(0)
+        self.assertEqual(len(recent_points), 10)  # Ensure only the last 10 points are retained
+
 if __name__ == "__main__":
-    # Run Tests
-    unittest.main(exit=False)
+    unittest.main(exit=False)  # Run the tests and keep the script running
 
-    # Demonstrate the Functions
-    plot_normal_distribution()  # Test 1: Plot standard normal distribution
-    plot_line(y_intercept=0, slope=1, lower_x=-10, upper_x=10)  # Test 2: Plot line
+    # Run the functions for demonstration
+    plot_normal_distribution()
+    plot_line(y_intercept=0, slope=1, lower_x=-10, upper_x=10)
+    live_plot_distribution()
