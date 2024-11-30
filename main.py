@@ -24,15 +24,13 @@ def plot_normal_distribution():
     
 # Function to plot a line given the y-intercept, the slope, the lower x boundary, and the upper x boundary.
 def plot_line(y_intercept, slope, lower_x, upper_x):
-    """
-    Plot a line defined by a y-intercept and slope within specified x boundaries.
+    """Plot a line defined by a y-intercept and slope within specified x boundaries.
 
     Args:
-        y_intercept (float): The y-intercept of the line.
-        slope (float): The slope of the line.
-        lower_x (float): The lower bound of the x-axis.
-        upper_x (float): The upper bound of the x-axis.
-
+        y_intercept (float): y-intercept 
+        slope (float): slope
+        lower_x (float): lower bound 
+        upper_x (float): upper bound 
     Returns:
         Graph
     """
@@ -55,3 +53,25 @@ def plot_line(y_intercept, slope, lower_x, upper_x):
     plt.legend()
     plt.show()
 
+# Generate a point every second following a normal distribution and update the plot with the last 10 points
+def live_plot_distribution():
+    plt.style.use('fivethirtyeight')
+    fig, ax = plt.subplots()
+    ax.set_xlim(0, 10)  
+    ax.set_ylim(-3, 3)  
+    ax.set_title('Updating Plot of Recent Points')
+    ax.set_xlabel('Time (s)')
+    ax.set_ylabel('Value')
+    lines, = ax.plot([], [], 'bo-') 
+
+    # Prepare to store recent points
+    recent_points = []
+    
+    """
+    Generate a point every second following a normal distribution and update the plot with the last 10 points.
+
+    Args:
+        Generates a plot line with parameters
+    Returns:
+        graph
+    """
